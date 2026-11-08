@@ -1,11 +1,18 @@
 
+
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 
 import SignupScreen from './SignupScreen';
 import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen';
 import DetailScreen from './DetailScreen';
+import FavoritesScreen from './FavoritesScreen';
 import SettingsMenu from './SettingsMenu';
 import SettingsScreen from './SettingsScreen';
 import NotificationsScreen from './Notifications';
@@ -23,15 +30,22 @@ export default function App() {
     Login: <LoginScreen navigation={navigation} />,
     Home: <HomeScreen navigation={navigation} />,
     Detail: <DetailScreen navigation={navigation} />,
+    Favorites: <FavoritesScreen navigation={navigation} />,
     SettingsMenu: <SettingsMenu navigation={navigation} />,
     Settings: <SettingsScreen navigation={navigation} />,
-    Notifications: <NotificationsScreen />,
+    Notifications: <NotificationsScreen navigation={navigation} />,
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.navigation}>
-        {['Signup', 'Login', 'Home', 'SettingsMenu'].map((item) => (
+        {[
+          'Signup',
+          'Login',
+          'Home',
+          'Favorites',
+          'SettingsMenu',
+        ].map((item) => (
           <TouchableOpacity
             key={item}
             onPress={() => setScreen(item)}
@@ -42,7 +56,9 @@ export default function App() {
       </View>
 
       <View style={styles.content}>
-        {screens[screen] || <Text>Screen not found</Text>}
+        {screens[screen] || (
+          <Text>Screen not found</Text>
+        )}
       </View>
     </View>
   );
@@ -56,15 +72,18 @@ const styles = StyleSheet.create({
   navigation: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    flexWrap: 'wrap',
     padding: 12,
     backgroundColor: '#2457C5',
   },
   navText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 11,
+    padding: 5,
   },
   content: {
     flex: 1,
   },
 });
+
