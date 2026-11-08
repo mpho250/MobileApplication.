@@ -1,0 +1,70 @@
+
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+import SignupScreen from './SignupScreen';
+import LoginScreen from './LoginScreen';
+import HomeScreen from './HomeScreen';
+import DetailScreen from './DetailScreen';
+import SettingsMenu from './SettingsMenu';
+import SettingsScreen from './SettingsScreen';
+import NotificationsScreen from './Notifications';
+
+export default function App() {
+  const [screen, setScreen] = useState('Signup');
+
+  const navigation = {
+    navigate: (name) => setScreen(name),
+    goBack: () => setScreen('Home'),
+  };
+
+  const screens = {
+    Signup: <SignupScreen navigation={navigation} />,
+    Login: <LoginScreen navigation={navigation} />,
+    Home: <HomeScreen navigation={navigation} />,
+    Detail: <DetailScreen navigation={navigation} />,
+    SettingsMenu: <SettingsMenu navigation={navigation} />,
+    Settings: <SettingsScreen navigation={navigation} />,
+    Notifications: <NotificationsScreen />,
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.navigation}>
+        {['Signup', 'Login', 'Home', 'SettingsMenu'].map((item) => (
+          <TouchableOpacity
+            key={item}
+            onPress={() => setScreen(item)}
+          >
+            <Text style={styles.navText}>{item}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <View style={styles.content}>
+        {screens[screen] || <Text>Screen not found</Text>}
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  navigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 12,
+    backgroundColor: '#2457C5',
+  },
+  navText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  content: {
+    flex: 1,
+  },
+});
